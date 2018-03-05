@@ -1,3 +1,4 @@
+from auto_pilot.data.world_map import WorldMap
 from auto_pilot.common.param import Param
 from auto_pilot.common.registrable import Registrable
 from typing import TypeVar
@@ -5,6 +6,9 @@ T = TypeVar('T')
 
 
 class RouteFinder(Registrable):
+    def find_route(self, *params) -> WorldMap:
+        raise NotImplementedError
+
     @classmethod
     def from_params(cls, param: Param) -> 'RouteFinder':
         class_choice = param.pop("type")

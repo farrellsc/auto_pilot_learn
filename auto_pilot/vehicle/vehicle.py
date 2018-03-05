@@ -8,7 +8,7 @@ T = TypeVar('T')
 
 
 class Vehicle(Registrable):
-    def set_noise(self, new_t_noise, new_d_noise, new_m_noise):
+    def set_noise(self, new_t_noise, new_d_noise, new_m_noise, drift):
         """
         This lets us change the noise parameters, which can be very
         helpful when using particle filters.
