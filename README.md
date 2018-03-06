@@ -1,5 +1,5 @@
 # zAutoPilot
-A toy project for udacity robotics course https://classroom.udacity.com/courses/cs373
+A toy project for udacity robotics course https://classroom.udacity.com/courses/cs373  
 Includes a basic set of tools for robotics on localization, route finding, control, and map building.
 
 # Installation
