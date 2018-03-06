@@ -1,3 +1,5 @@
+from auto_pilot.common.util import ll_to_path
+from auto_pilot.data.path import Path
 from auto_pilot.data.coordinates import Coordinates
 from auto_pilot.data.world_map import WorldMap
 from auto_pilot.search.route_finder import RouteFinder
@@ -7,22 +9,22 @@ from overrides import overrides
 
 @RouteFinder.register("dp")
 class DP(RouteFinder):
-    def __init__(self, delta, delta_name, cost):
-        self.delta = delta
+    def __init__(self, cost):
+        self.delta = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+        self.delta_name = ["^", ">", "v", "<"]
         self.cost = cost
-        self.delta_name = delta_name
 
-    def find_route(self, world_map: WorldMap, init: Coordinates, goal: Coordinates) -> WorldMap:
+    def find_route(self, world_map: WorldMap, init: Coordinates, goal: Coordinates) -> Path:
         """
         Find route using dynamic programming
         :return: WorldMap
         """
-        value = [[99 for row in range(len(world_map[0]))] for col in range(len(world_map))]
+        value = [[99 for row in range(world_map.shape[0])] for col in range(world_map.shape[1])]
         change = True
         while change:
             change = False
-            for x in range(len(world_map)):
-                for y in range(len(world_map[0])):
+            for x in range(world_map.shape[0]):
+                for y in range(world_map.shape[1]):
                     if goal.x == x and goal.y == y:
                         if value[x][y] > 0:
                             value[x][y] = 0
@@ -37,8 +39,9 @@ class DP(RouteFinder):
                                 if v2 < value[x][y]:
                                     change = True
                                     value[x][y] = v2
-        return value
+        return ll_to_path(value)
 
     @classmethod
     def from_params(cls, param: Param) -> 'DP':
-        return cls()
+        cost = param.pop("cost")
+        return cls(cost=cost)

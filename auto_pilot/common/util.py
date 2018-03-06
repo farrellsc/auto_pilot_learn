@@ -1,4 +1,9 @@
+from auto_pilot.data.world_map import WorldMap
+from auto_pilot.data.senseRet import SensorRet
+from auto_pilot.data.path import Path
+from auto_pilot.data.coordinates import Coordinates
 from math import pi, exp, sqrt
+from typing import List
 
 
 def angle_trunc(a):
@@ -23,3 +28,15 @@ def measurement_prob(measurement, sense_noise, landmarks):
         dist = sqrt((x - landmarks[i][0]) ** 2 + (y - landmarks[i][1]) ** 2)
         prob *= gaussian(dist, sense_noise, measurement[i])
     return prob
+
+
+def region_similarity(observation: SensorRet, world_map: WorldMap, pos: Coordinates) -> float:
+    """
+    calculate the similarity ratio between observation and worldmap[i,j]
+    return a float in range of [0,1]
+    """
+    raise NotImplementedError
+
+
+def ll_to_path(map: List[List[int]]) -> Path:
+    raise NotImplementedError

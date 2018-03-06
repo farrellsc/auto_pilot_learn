@@ -3,21 +3,29 @@ from auto_pilot.data.world_map import WorldMap
 from auto_pilot.data.coordinates import Coordinates
 from auto_pilot.data.motion import Motion
 from auto_pilot.common.param import Param
-from auto_pilot.vehicle.vehicle import Vehicle
+from auto_pilot.robot.robot import Robot
 from auto_pilot.common.util import measurement_prob
 from overrides import overrides
-import numpy as np
 import random
 from typing import List
 
 
 @Filter.register("particle")
 class Particle(Filter):
-    def __init__(self, sense_noise: float, particle_num: int, particle_type: Vehicle, particle_params):
+    """
+    continuous, 2D
+    """
+    def __init__(self, sense_noise: float, particle_num: int, particle_params: Param):
         self.__particle_num = particle_num
+        self.__sense_noise = 0.0
+        self.__particles: List[Robot] = \
+            [Robot.from_params(particle_params) for _ in range(self.__particle_num)]
+
+        self.set_noise(sense_noise)
+
+    @overrides
+    def set_noise(self, sense_noise: float):
         self.__sense_noise = sense_noise
-        self.__particles: List[particle_type] = \
-            [particle_type.from_params(particle_params) for _ in range(self.__particle_num)]
 
     @overrides
     def sensing_update_prob(self, true_pos: Coordinates, landmarks: List[Coordinates]):
@@ -36,7 +44,7 @@ class Particle(Filter):
             beta += random.uniform(0, weight_max)
             while weights[weight_index] < beta:
                 beta -= weights[weight_index]
-                weight_index = (weight_index+ 1) % self.__particle_num
+                weight_index = (weight_index + 1) % self.__particle_num
             next_particles.append(self.__particles[weight_index])
         self.__particles = next_particles
 
@@ -45,9 +53,15 @@ class Particle(Filter):
         """
         Perform motion for each particle
         """
-        for i in range(len(self.__particles)):
-            self.__particles[i].move(motion)
+        [self.__particles[i].move(motion) for i in range(self.__particle_num)]
 
     @classmethod
     def from_params(cls, param: Param) -> 'Particle':
-        return cls()
+        particle_num: int = param.pop("particle_num")
+        particle_params: Param = param.pop("particle_params")
+        sense_noise: float = param.get("sense_noise", 0.0)
+        return cls(
+            particle_num=particle_num,
+            particle_params=particle_params,
+            sense_noise=sense_noise
+        )

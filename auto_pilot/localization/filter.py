@@ -30,6 +30,9 @@ class Filter(Registrable):
         """
         raise NotImplementedError
 
+    def set_noise(self, *params):
+        raise NotImplementedError
+
     @classmethod
     def from_params(cls, param: Param) -> 'Filter':
         class_choice = param.pop("type")
