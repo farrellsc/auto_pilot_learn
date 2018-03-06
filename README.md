@@ -9,7 +9,7 @@ Includes a basic set of tools for robotics on localization, route finding, contr
 To run a module use `python -m zautopilot <command>`
 For detailed usage introduction see `zautopilot.example (TO BE ADDED)`
 
-# Table of Contents
+# Contents
 Module|Functionality|Class
 :--:|:--:|:--:
 zautopilot.commands|functionality for command line interface|-
