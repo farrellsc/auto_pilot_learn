@@ -9,8 +9,17 @@ def read_install_requirements():
     return requirements
 
 setup(
-    name="zzAutoPilot",
+    name="zAutoPilot",
     version="0.0",
+    description='A toy project coded for udacity cs373 AI for robotics.',
+    keywords='robotics autopilot localization search control',
+    url='https://github.com/farrellsc/zAutoPilot',
+    author='Zhou Zhuang',
+    license='MIT',
     packages=find_packages(),
-    install_requires=read_install_requirements()
+    install_requires=read_install_requirements(),
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
+    include_package_data=True,
+    python_requires='>=3.5'
 )

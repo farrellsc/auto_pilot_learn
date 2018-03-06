@@ -1,7 +1,10 @@
 class Motion:
-    def __init__(self, turning: float, distance: float):
+    """
+    TODO: add new class 'transition' for to_F
+    """
+    def __init__(self, turning: float, speed: float):
         self.turning = turning
-        self.distance = distance
+        self.speed = speed
 
     def to_F(self):
         """
@@ -9,4 +12,3 @@ class Motion:
         :return:
         """
         raise NotImplementedError
-

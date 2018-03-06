@@ -13,6 +13,7 @@ class Controller(Registrable):
         :param speed:
         :return:
         """
+        raise NotImplementedError
 
     @classmethod
     def from_params(cls, param: Param) -> 'Controller':

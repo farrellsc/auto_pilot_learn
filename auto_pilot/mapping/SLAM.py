@@ -3,8 +3,11 @@ from auto_pilot.common.param import Param
 from overrides import overrides
 
 
-@RouteFinder.register("SLAM")
+@Mapper.register("SLAM")
 class SLAM(Mapper):
+    """
+    TODO
+    """
     def __init__(self):
         pass
 
