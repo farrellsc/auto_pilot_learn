@@ -35,8 +35,14 @@ def region_similarity(observation: SensorRet, world_map: WorldMap, pos: Coordina
     calculate the similarity ratio between observation and worldmap[i,j]
     return a float in range of [0,1]
     """
-    raise NotImplementedError
+    x, y = pos.coords
+    print(x,y,)
+    sx, sy = observation.data.shape
+    wx, wy = world_map.map.shape
+    print((x+sx)%(wx+1), (y+sy)%(wy+1))
+    cut = world_map.map[x: (x+sx)%(wx+1), y: (y+sy)%(wy+1)]
+    return 1 - abs(observation.data-cut).sum() / max(observation.data.sum(), cut.sum())
 
 
 def ll_to_path(map: List[List[int]]) -> Path:
-    raise NotImplementedError
+    return Path([Coordinates(x, y) for x, y in map])
