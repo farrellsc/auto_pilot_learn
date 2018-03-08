@@ -1,12 +1,12 @@
 # zAutoPilot
-A toy project for udacity robotics course https://classroom.udacity.com/courses/cs373
+A toy project for udacity robotics course https://classroom.udacity.com/courses/cs373  
 Includes a basic set of tools for robotics on localization, route finding, control, and map building.
 
 # Installation
 `python setup.py install`
 
 # How to run
-To run a module use `python -m zautopilot <command>`
+To run a module use `python -m zautopilot <command>`  
 For detailed usage introduction see `zautopilot.example (TO BE ADDED)`
 
 # Contents
